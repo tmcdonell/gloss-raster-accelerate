@@ -1,0 +1,27 @@
+Name:                   gloss-raster-accelerate
+Version:                1.7.8.0
+Synopsis:               Parallel rendering of raster images using Accelerate
+Description:            Parallel rendering of raster images using Accelerate
+License:                BSD3
+License-file:           LICENSE
+Author:                 Trevor L. McDonell
+Maintainer:             tmcdonell@cse.unsw.edu.au
+Category:               Graphics
+Build-type:             Simple
+Cabal-version:          >=1.10
+
+Library
+  Exposed-modules:
+        Graphics.Gloss.Raster.Array
+        Graphics.Gloss.Raster.Field
+
+  build-depends:
+        base                    == 4.6.*,
+        accelerate              == 0.14.*,
+        gloss                   == 1.7.8.*
+
+  ghc-options:
+        -Wall
+
+-- vim: nospell
+
