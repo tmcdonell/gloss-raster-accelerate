@@ -12,6 +12,7 @@ Cabal-version:          >=1.10
 
 Library
   Exposed-modules:
+        Graphics.Gloss.Data.Color
         Graphics.Gloss.Raster.Array
         Graphics.Gloss.Raster.Field
 
