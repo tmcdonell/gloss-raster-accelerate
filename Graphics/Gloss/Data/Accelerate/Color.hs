@@ -5,9 +5,11 @@
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE UndecidableInstances  #-}
--- | Predefined and custom colors.
+
+-- | Predefined and custom colors. Essentially equivalent to the
+-- "Graphics.Gloss.Data.Color", but lifted to Accelerate types.
 --
-module Graphics.Gloss.Data.Color (
+module Graphics.Gloss.Data.Accelerate.Color (
 
   -- ** Color data type
   Color,
