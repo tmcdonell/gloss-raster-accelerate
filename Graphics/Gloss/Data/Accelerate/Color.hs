@@ -17,6 +17,7 @@ module Graphics.Gloss.Data.Accelerate.Color (
   makeColor8,
   rawColor,
   rgbaOfColor,
+  packRGBA, packABGR,
 
   -- ** Color functions
   mixColors,
@@ -39,6 +40,7 @@ module Graphics.Gloss.Data.Accelerate.Color (
 ) where
 
 import Prelude                                  as P
+import Data.Bits
 import Data.Typeable
 import Data.Array.Accelerate                    as A
 import Data.Array.Accelerate.Smart
@@ -65,24 +67,24 @@ data RGBA a = RGBA a a a a
 
 
 instance Num a => Num (RGBA a) where
- (+) (RGBA r1 g1 b1 _) (RGBA r2 g2 b2 _)
+  (+) (RGBA r1 g1 b1 _) (RGBA r2 g2 b2 _)
         = RGBA (r1 + r2) (g1 + g2) (b1 + b2) 1
 
- (-) (RGBA r1 g1 b1 _) (RGBA r2 g2 b2 _)
+  (-) (RGBA r1 g1 b1 _) (RGBA r2 g2 b2 _)
         = RGBA (r1 - r2) (g1 - g2) (b1 - b2) 1
 
- (*) (RGBA r1 g1 b1 _) (RGBA r2 g2 b2 _)
+  (*) (RGBA r1 g1 b1 _) (RGBA r2 g2 b2 _)
         = RGBA (r1 * r2) (g1 * g2) (b1 * b2) 1
 
- abs (RGBA r1 g1 b1 _)
+  abs (RGBA r1 g1 b1 _)
         = RGBA (abs r1) (abs g1) (abs b1) 1
 
- signum (RGBA r1 g1 b1 _)
+  signum (RGBA r1 g1 b1 _)
         = RGBA (signum r1) (signum g1) (signum b1) 1
 
- fromInteger i
-  = let f = fromInteger i
-    in  RGBA f f f 1
+  fromInteger i
+        = let f = fromInteger i
+          in  RGBA f f f 1
 
 
 -- Represent colours in Accelerate as a 4-tuple
@@ -178,6 +180,32 @@ normaliseColor cc
   = let (r, g, b, a)    = rgbaOfColor cc
         m               = P.maximum [r, g, b]
     in  lift $ RGBA (r / m) (g / m) (b / m) a
+
+
+-- | Convert a color into a packed RGBA value.
+--
+packRGBA :: Exp Color -> Exp Word32
+packRGBA c
+  = let (r, g, b, a)    = rgbaOfColor c
+    in  word32OfFloat r `A.shiftL` 24
+    .|. word32OfFloat g `A.shiftL` 16
+    .|. word32OfFloat b `A.shiftL` 8
+    .|. word32OfFloat a
+
+-- | Convert a colour into a packed BGRA value.
+--
+-- This is necessary as OpenGL reads pixel data as ABGR, rather than RGBA.
+--
+packABGR :: Exp Color -> Exp Word32
+packABGR c
+  = let (r, g, b, a)    = rgbaOfColor c
+    in  word32OfFloat a `A.shiftL` 24
+    .|. word32OfFloat b `A.shiftL` 16
+    .|. word32OfFloat g `A.shiftL` 8
+    .|. word32OfFloat r
+
+word32OfFloat :: Exp Float -> Exp Word32
+word32OfFloat f = A.truncate (f * 255)
 
 
 -- Color functions ------------------------------------------------------------
