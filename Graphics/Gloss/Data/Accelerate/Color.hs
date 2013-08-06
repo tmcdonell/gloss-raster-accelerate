@@ -24,6 +24,7 @@ module Graphics.Gloss.Data.Accelerate.Color (
   addColors,
   dim, bright,
   light, dark,
+  opaque,
 
   -- ** Pre-defined colors
   greyN, black, white,
@@ -261,12 +262,17 @@ light c
   = let RGBA r g b a            = unlift c
     in  clampColor $ rawColor (r + 0.2) (g + 0.2) (b + 0.2) a
 
-
 -- | Darken a color, adding black.
 dark :: Exp Color -> Exp Color
 dark c
   = let RGBA r g b a            = unlift c
     in  clampColor $ rawColor (r - 0.2) (g - 0.2) (b - 0.2) a
+
+-- | Make a colour completely opaque.
+opaque :: Exp Color -> Exp Color
+opaque c
+  = let RGBA r g b _            = unlift c
+    in  rawColor r g b 1.0
 
 
 -- Pre-defined Colors ---------------------------------------------------------
