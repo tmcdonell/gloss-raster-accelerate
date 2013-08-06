@@ -21,7 +21,6 @@ Library
         gloss                   == 1.7.8.*
 
   ghc-options:
-        -Wall
+        -Wall -O2
 
 -- vim: nospell
-
