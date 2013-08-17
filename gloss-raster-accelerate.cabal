@@ -10,6 +10,11 @@ Category:               Graphics
 Build-type:             Simple
 Cabal-version:          >=1.10
 
+Flag cuda
+  Description:          Enable the CUDA parallel backend for NVIDIA GPUs
+  Default:              True
+
+
 Library
   Exposed-modules:
         Graphics.Gloss.Accelerate.Render
@@ -21,6 +26,11 @@ Library
         accelerate              == 0.14.*,
         gloss                   == 1.7.8.*,
         gloss-accelerate        == 1.7.8.*
+
+  if flag(cuda)
+    cpp-options:                -DACCELERATE_CUDA_BACKEND
+    Build-depends:
+        accelerate-cuda         >= 0.14
 
   ghc-options:
         -Wall -O2
