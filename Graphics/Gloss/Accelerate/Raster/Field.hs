@@ -71,10 +71,7 @@ animateFieldWith backend display (zoomX, zoomY) makePixel
         -- Size of the raw image to render
         (winSizeX, winSizeY)    = sizeOfDisplay display
 
-        sizeX                   = winSizeX `div` zoomX
-        sizeY                   = winSizeY `div` zoomY
-
-        picture time            = makePicture backend winSizeX winSizeY sizeX sizeY (\t -> makePixel (the t))
+        picture time            = makePicture backend winSizeX winSizeY zoomX zoomY (\t -> makePixel (the t))
                                 $ fromList Z [time]
     in
     animateFixedIO display G.black (return . picture)
@@ -122,17 +119,10 @@ playFieldWith backend display (zoomX, zoomY) stepRate
         -- Size of the raw image to render
         (winSizeX, winSizeY)    = sizeOfDisplay display
 
-        sizeX                   = winSizeX `div` zoomX
-        sizeY                   = winSizeY `div` zoomY
-
-        picture                 = makePicture backend winSizeX winSizeY sizeX sizeY makePixel
+        picture                 = makePicture backend winSizeX winSizeY zoomX zoomY makePixel
                                 . makeWorld
     in
-    play display G.black stepRate
-           initState
-           picture
-           handleEvent
-           stepState
+    play display G.black stepRate initState picture handleEvent stepState
 
 
 -- Internals
