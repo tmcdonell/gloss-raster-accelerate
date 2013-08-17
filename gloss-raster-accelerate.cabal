@@ -19,7 +19,8 @@ Library
   build-depends:
         base                    == 4.6.*,
         accelerate              == 0.14.*,
-        gloss                   == 1.7.8.*
+        gloss                   == 1.7.8.*,
+        gloss-accelerate        == 1.7.8.*
 
   ghc-options:
         -Wall -O2
