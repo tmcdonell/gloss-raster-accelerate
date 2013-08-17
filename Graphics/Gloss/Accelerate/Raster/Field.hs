@@ -2,7 +2,7 @@
 
 -- | Rendering of 2D functions as raster fields
 --
-module Graphics.Gloss.Raster.Field (
+module Graphics.Gloss.Accelerate.Raster.Field (
 
   module Graphics.Gloss.Accelerate.Data.Point,
   module Graphics.Gloss.Accelerate.Data.Color,
