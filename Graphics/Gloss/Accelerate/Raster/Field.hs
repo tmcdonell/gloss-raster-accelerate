@@ -76,22 +76,6 @@ animateFieldWith backend display (zoomX, zoomY) makePixel
 
         picture time            = makePicture backend winSizeX winSizeY sizeX sizeY (\t -> makePixel (the t))
                                 $ fromList Z [time]
-
-{--
-        -- Create the field by applying the function at each point
-        makeField time          = A.generate (constant (Z :. sizeY :. sizeX))
-                                             (makePixel (the time) . pointOfIndex sizeX sizeY)
-
-        -- Function to evaluate the field and render as an image. Make sure to
-        -- use the run1 form and create kernels that can be properly cached.
-        makeFrame               = run1 backend
-                                $ \time -> A.map (packRGBA . opaque) (makeField time)
-
-        -- Finally turn the image into a bitmap for display by gloss
-        makePicture time        = Scale (P.fromIntegral zoomX)
-                                        (P.fromIntegral zoomY)
-                                        (bitmapOfArray (makeFrame (fromList Z [time])) False)
---}
     in
     animateFixedIO display G.black (return . picture)
 
@@ -143,21 +127,6 @@ playFieldWith backend display (zoomX, zoomY) stepRate
 
         picture                 = makePicture backend winSizeX winSizeY sizeX sizeY makePixel
                                 . makeWorld
-{--
-        -- Create the field by applying the function at each point
-        makeField world         = A.generate (constant (Z :. sizeY :. sizeX))
-                                             (makePixel world . pointOfIndex sizeX sizeY)
-
-        -- Function to evaluate the field and render as an image. Make sure to
-        -- use the run1 form and create kernels that can be properly cached.
-        makeFrame               = run1 backend
-                                $ \world -> A.map (packRGBA . opaque) (makeField world)
-
-        -- Finally turn the image into a bitmap for display by gloss
-        makePicture state       = Scale (P.fromIntegral zoomX)
-                                        (P.fromIntegral zoomY)
-                                        (bitmapOfArray (makeFrame (makeWorld state)) False)
---}
     in
     play display G.black stepRate
            initState
