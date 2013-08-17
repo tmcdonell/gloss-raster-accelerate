@@ -13,9 +13,11 @@ import Data.Array.Accelerate.Interpreter
 #endif
 
 
--- | The type of executing Accelerate computations. Some variants of the display
---   functions take an argument of this type, which determine how computations
---   are executed.
+-- | The type of executing Accelerate computations. The CUDA and Interpreter
+--   backends both provide a function 'run1' that can be used.
+--
+--   Some variants of the display functions take an argument of this type, which
+--   determine how computations are executed.
 --
 type Render = forall a b. (Arrays a, Arrays b) => (Acc a -> Acc b) -> a -> b
 
