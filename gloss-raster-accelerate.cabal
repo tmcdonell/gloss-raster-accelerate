@@ -18,7 +18,7 @@ Flag cuda
 Library
   Exposed-modules:
         Graphics.Gloss.Accelerate.Render
-        --Graphics.Gloss.Accelerate.Raster.Array
+        Graphics.Gloss.Accelerate.Raster.Array
         Graphics.Gloss.Accelerate.Raster.Field
 
   build-depends:

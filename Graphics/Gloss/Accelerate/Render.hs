@@ -4,8 +4,7 @@
 module Graphics.Gloss.Accelerate.Render
   where
 
-import Data.Array.Accelerate                            ( Arrays, Acc )
-
+import Data.Array.Accelerate
 #ifdef ACCELERATE_CUDA_BACKEND
 import Data.Array.Accelerate.CUDA
 #else

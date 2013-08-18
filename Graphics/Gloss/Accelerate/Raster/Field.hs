@@ -12,8 +12,7 @@ module Graphics.Gloss.Accelerate.Raster.Field (
   animateField, animateFieldWith,
   playField, playFieldWith,
 
-  -- * Frame creation
-  makePicture,
+  -- * Field creation
   makeField,
 
 ) where
@@ -22,16 +21,13 @@ module Graphics.Gloss.Accelerate.Raster.Field (
 import Graphics.Gloss.Accelerate.Render
 import Graphics.Gloss.Accelerate.Data.Color
 import Graphics.Gloss.Accelerate.Data.Point
-import Graphics.Gloss.Accelerate.Data.Picture
+import Graphics.Gloss.Accelerate.Raster.Array
 
 -- Standard library
 import Prelude                                          as P
 
 -- Gloss
-import Graphics.Gloss.Data.Display                      ( Display(..) )
-import Graphics.Gloss.Data.Picture                      ( Picture(..) )
-import Graphics.Gloss.Interface.IO.Animate              as G ( animateFixedIO, black )
-import Graphics.Gloss.Interface.Pure.Game               as G ( Event, play )
+import Graphics.Gloss.Interface.Pure.Game               ( Event )
 
 -- Accelerate
 import Data.Array.Accelerate                            as A
@@ -67,19 +63,12 @@ animateFieldWith
             --   It is passed the time in seconds since the program started, and
             --   a point between (-1,1) and (+1,1).
     -> IO ()
-animateFieldWith render display (zoomX, zoomY) makePixel
-  | zoomX < 1 || zoomY < 1
-  = error "Graphics.Gloss.Raster.Field: invalid pixel scalar factor"
-
-  | otherwise
-  = let
-        -- Size of the raw image to render
-        (winSizeX, winSizeY)    = sizeOfDisplay display
-
-        picture time            = makePicture render winSizeX winSizeY zoomX zoomY (\t -> makePixel (the t))
-                                $ fromList Z [time]
-    in
-    animateFixedIO display G.black (return . picture)
+animateFieldWith render display zoom@(zoomX, zoomY) makePixel
+  = animateArrayWith
+        render
+        display
+        zoom
+        (makeField display zoomX zoomY makePixel)
 
 
 -- | Play a game with a continuous 2D function using the default backend.
@@ -121,20 +110,18 @@ playFieldWith
             -- ^ Step the world one iteration.
             --   It is passed the time in seconds since the program started.
     -> IO ()
-playFieldWith render display (zoomX, zoomY) stepRate
+playFieldWith render display zoom@(zoomX, zoomY) stepRate
               initState makeWorld makePixel handleEvent stepState
-  | zoomX < 1 || zoomY < 1
-  = error "Graphics.Gloss.Raster.Field: invalid pixel scalar factor"
-
-  | otherwise
-  = let
-        -- Size of the raw image to render
-        (winSizeX, winSizeY)    = sizeOfDisplay display
-
-        picture                 = makePicture render winSizeX winSizeY zoomX zoomY makePixel
-                                . makeWorld
-    in
-    play display G.black stepRate initState picture handleEvent stepState
+  = playArrayWith
+        render
+        display
+        zoom
+        stepRate
+        initState
+        makeWorld
+        (makeField display zoomX zoomY makePixel)
+        handleEvent
+        stepState
 
 
 -- Internals
@@ -146,37 +133,29 @@ sizeOfDisplay display
       InWindow _ s _    -> s
       FullScreen s      -> s
 
-makePicture
-    :: Arrays world
-    => Render                                   -- ^ method to compute the field
-    -> Int                                      -- ^ window width
-    -> Int                                      -- ^ window height
+
+-- | Lift a point-wise colouring function into an image creation function.
+--
+--   The parameter 'world' at this point can be arbitrary. However if you use
+--   this function standalone, you will probably at some point want the result
+--   of this function to plug into 'makePicture' and thus 'Render', and thus be
+--   a unary function from 'Arrays' to 'Arrays'.
+--
+makeField
+    :: Display
     -> Int                                      -- ^ pixel width
     -> Int                                      -- ^ pixel height
-    -> (Acc world -> Exp Point -> Exp Color)    -- ^ function to apply at each point
-    -> (world -> Picture)                       -- ^ new function that generates the picture
-makePicture render winSizeX winSizeY zoomX zoomY makePixel
-  = let -- Size of the raw image to render
-        sizeX           = winSizeX `div` zoomX
-        sizeY           = winSizeY `div` zoomY
+    -> (world -> Exp Point -> Exp Color)        -- ^ function to apply at each point
+    -> (world -> Acc (Array DIM2 Color))        -- ^ new function that generates the field
+makeField display zoomX zoomY makePixel world
+  = let
+        -- size of the window
+        (winSizeX, winSizeY)    = sizeOfDisplay display
 
-        -- Compute the image
-        pixels          = makeField render sizeX sizeY makePixel
-
-        -- Turn the array into a Gloss picture
-        picture world   = bitmapOfArray (pixels world) False
+        -- size of the raw image to render
+        sizeX                   = winSizeX `div` zoomX
+        sizeY                   = winSizeY `div` zoomY
     in
-    Scale (P.fromIntegral zoomX) (P.fromIntegral zoomY) . picture
-
-makeField
-    :: Arrays world
-    => Render                                   -- ^ method to compute the field
-    -> Int                                      -- ^ width
-    -> Int                                      -- ^ height
-    -> (Acc world -> Exp Point -> Exp Color)    -- ^ function to apply at each point
-    -> (world -> Array DIM2 Word32)             -- ^ new function that computes the image
-makeField render sizeX sizeY makePixel
-  = render
-  $ \world -> A.generate (constant (Z :. sizeY :. sizeX))
-                         (packRGBA . opaque . makePixel world . pointOfIndex sizeX sizeY)
+    A.generate (constant (Z :. sizeY :. sizeX))
+               (makePixel world . pointOfIndex sizeX sizeY)
 
