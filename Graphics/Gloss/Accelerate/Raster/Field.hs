@@ -64,11 +64,18 @@ animateFieldWith
             --   a point between (-1,1) and (+1,1).
     -> IO ()
 animateFieldWith render display zoom@(zoomX, zoomY) makePixel
-  = animateArrayWith
+  = let -- size of the window
+        (winSizeX, winSizeY)    = sizeOfDisplay display
+
+        -- size of the raw image to render
+        sizeX                   = winSizeX `div` zoomX
+        sizeY                   = winSizeY `div` zoomY
+    in
+    animateArrayWith
         render
         display
         zoom
-        (makeField display zoomX zoomY makePixel)
+        (makeField sizeX sizeY makePixel)
 
 
 -- | Play a game with a continuous 2D function using the default backend.
@@ -112,14 +119,21 @@ playFieldWith
     -> IO ()
 playFieldWith render display zoom@(zoomX, zoomY) stepRate
               initState makeWorld makePixel handleEvent stepState
-  = playArrayWith
+  = let -- size of the window
+        (winSizeX, winSizeY)    = sizeOfDisplay display
+
+        -- size of the raw image to render
+        sizeX                   = winSizeX `div` zoomX
+        sizeY                   = winSizeY `div` zoomY
+    in
+    playArrayWith
         render
         display
         zoom
         stepRate
         initState
         makeWorld
-        (makeField display zoomX zoomY makePixel)
+        (makeField sizeX sizeY makePixel)
         handleEvent
         stepState
 
@@ -142,20 +156,11 @@ sizeOfDisplay display
 --   a unary function from 'Arrays' to 'Arrays'.
 --
 makeField
-    :: Display
-    -> Int                                      -- ^ pixel width
-    -> Int                                      -- ^ pixel height
+    :: Int                                      -- ^ image width
+    -> Int                                      -- ^ image height
     -> (world -> Exp Point -> Exp Color)        -- ^ function to apply at each point
     -> (world -> Acc (Array DIM2 Color))        -- ^ new function that generates the field
-makeField display zoomX zoomY makePixel world
-  = let
-        -- size of the window
-        (winSizeX, winSizeY)    = sizeOfDisplay display
-
-        -- size of the raw image to render
-        sizeX                   = winSizeX `div` zoomX
-        sizeY                   = winSizeY `div` zoomY
-    in
-    A.generate (constant (Z :. sizeY :. sizeX))
+makeField sizeX sizeY makePixel world
+  = A.generate (constant (Z :. sizeY :. sizeX))
                (makePixel world . pointOfIndex sizeX sizeY)
 
