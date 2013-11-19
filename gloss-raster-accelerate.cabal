@@ -24,8 +24,8 @@ Library
   build-depends:
         base                    == 4.6.*,
         accelerate              == 0.14.*,
-        gloss                   == 1.8.0.*,
-        gloss-accelerate        == 1.8.0.*
+        gloss                   == 1.8.*,
+        gloss-accelerate        == 1.8.*
 
   if flag(cuda)
     cpp-options:                -DACCELERATE_CUDA_BACKEND
