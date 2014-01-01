@@ -10,7 +10,8 @@ module Graphics.Gloss.Accelerate.Raster.Array (
   -- * Display functions
   Render, Display(..),
   animateArray, animateArrayWith,
-  playArray, playArrayWith,
+  playArray, playArrayWith, 
+  playArrayIO, playArrayIOWith,
 
   -- * Picture creation
   makePicture,
@@ -31,6 +32,7 @@ import Graphics.Gloss.Data.Display                      ( Display(..) )
 import Graphics.Gloss.Data.Picture                      ( Picture(..) )
 import Graphics.Gloss.Interface.IO.Animate              as G ( animateFixedIO, black )
 import Graphics.Gloss.Interface.Pure.Game               as G ( Event, play )
+import Graphics.Gloss.Interface.IO.Game                 as G ( playIO )
 
 -- Accelerate
 import Data.Array.Accelerate                            as A
@@ -130,6 +132,51 @@ playArrayWith render display (zoomX, zoomY) stepRate
                         . makeWorld
     in
     play display G.black stepRate initState picture handleEvent stepState
+    
+playArrayIO
+    :: Arrays world
+    => Display          -- ^ Display mode
+    -> (Int, Int)       -- ^ Number of pixels to draw per point
+    -> Int              -- ^ Number of simulation steps to take for each second of real time
+    -> state            -- ^ The initial state
+    -> (state -> IO world) -- ^ Extract the world state
+    -> (Acc world -> Acc (Array DIM2 Color))
+            -- ^ Compute the colour of the world
+    -> (Event -> state -> IO state)
+            -- ^ Handle input events
+    -> (Float -> state -> IO state)
+            -- ^ Step the world one iteration.
+            --   It is passed the time in seconds since the program started.
+    -> IO ()
+playArrayIO = playArrayIOWith defaultRender
+
+
+playArrayIOWith
+    :: Arrays world
+    => Render           -- ^ Method to render the world
+    -> Display          -- ^ Display mode
+    -> (Int, Int)       -- ^ Number of pixels to draw per point
+    -> Int              -- ^ Number of simulation steps to take for each second of real time
+    -> state            -- ^ The initial state
+    -> (state -> IO world) -- ^ Extract the world state
+    -> (Acc world -> Acc (Array DIM2 Color))
+            -- ^ Compute the colour of the world
+    -> (Event -> state -> IO state)
+            -- ^ Handle input events
+    -> (Float -> state -> IO state)
+            -- ^ Step the world one iteration.
+            --   It is passed the time in seconds since the program started.
+    -> IO ()
+playArrayIOWith render display (zoomX, zoomY) stepRate
+              initState makeWorld makeArray handleEvent stepState
+  | zoomX < 1 || zoomY < 1
+  = error "Graphics.Gloss.Raster: invalid pixel scalar factor"
+
+  | otherwise
+  = let picture         = fmap (makePicture render zoomX zoomY makeArray)
+                        . makeWorld
+    in
+    G.playIO display G.black stepRate initState picture handleEvent stepState
 
 
 -- Internals
