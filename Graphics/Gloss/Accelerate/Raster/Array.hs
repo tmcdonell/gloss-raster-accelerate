@@ -98,7 +98,6 @@ animateArrayIO
             --   applied.
             --
             --   It is passed the world
-
     -> IO ()
 animateArrayIO = animateArrayIOWith defaultRender
 
