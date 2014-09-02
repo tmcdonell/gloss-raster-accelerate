@@ -78,8 +78,8 @@ animateFieldWith render display zoom@(zoomX, zoomY) makePixel
         display
         zoom
         (makeField sizeX sizeY makePixel)
-        
-        
+
+
 -- | Animate a continuous 2D function using IO actions and the default backend
 --
 animateFieldIO
@@ -96,7 +96,7 @@ animateFieldIO
     -> IO ()
 animateFieldIO = animateFieldIOWith defaultRender
 
-        
+
 -- | Animate a continuous 2D function using IO actions, specifying the backend used to render
 --   the field.
 --
