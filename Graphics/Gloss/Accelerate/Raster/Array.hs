@@ -77,8 +77,9 @@ animateArrayWith render display (zoomX, zoomY) makeArray
   = error "Graphics.Gloss.Raster: invalid pixel scalar factor"
 
   | otherwise
-  = let picture time    = makePicture render zoomX zoomY (makeArray . the)
-                        $ fromList Z [time]
+  = let picture         = makePicture render zoomX zoomY (makeArray . the)
+                        . fromList Z
+                        . return
     in
     animateFixedIO display G.black (return . picture)
 
