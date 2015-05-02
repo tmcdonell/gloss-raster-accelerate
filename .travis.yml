@@ -1,5 +1,9 @@
 language: haskell
 env:
+  global:
+    - MODE=-f-cuda
+
+  matrix:
     - GHC=7.8.4
     - GHC=7.10.1 CABAL=1.22
     - GHC=head CABAL=head
