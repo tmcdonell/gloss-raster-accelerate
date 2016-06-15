@@ -22,10 +22,10 @@ Library
         Graphics.Gloss.Accelerate.Raster.Field
 
   build-depends:
-        base                    >= 4.6 && < 4.9,
-        accelerate              >= 0.15,
-        gloss                   == 1.9.*,
-        gloss-accelerate        == 1.9.*
+        base                    >= 4.6
+      , accelerate              >= 0.16
+      , gloss                   >= 1.9
+      , gloss-accelerate        >= 1.9
 
   if flag(cuda)
     cpp-options:                -DACCELERATE_CUDA_BACKEND
