@@ -12,7 +12,7 @@ packages:
 
 - location:
     git:    https://github.com/tmcdonell/gloss-accelerate.git
-    commit: f120dfba7c2228f72fd0ba199ea5662fc802a08f
+    commit: 30d14e750db5e65e43fca0e7d3374ac74ce22b0f
   extra-dep: true
 
 extra-deps:

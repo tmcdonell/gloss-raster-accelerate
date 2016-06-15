@@ -1,5 +1,5 @@
 Name:                   gloss-raster-accelerate
-Version:                1.9.0.0
+Version:                0.2.0.0
 Synopsis:               Parallel rendering of raster images using Accelerate
 Description:            Parallel rendering of raster images using Accelerate
 License:                BSD3
@@ -25,7 +25,7 @@ Library
         base                    >= 4.6
       , accelerate              >= 0.16
       , gloss                   >= 1.9
-      , gloss-accelerate        >= 1.9
+      , gloss-accelerate        >= 0.2
 
   if flag(cuda)
     cpp-options:                -DACCELERATE_CUDA_BACKEND
