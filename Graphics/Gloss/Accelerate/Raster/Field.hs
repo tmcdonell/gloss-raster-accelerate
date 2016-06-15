@@ -5,7 +5,7 @@
 module Graphics.Gloss.Accelerate.Raster.Field (
 
   module Graphics.Gloss.Accelerate.Data.Point,
-  module Graphics.Gloss.Accelerate.Data.Color,
+  module Data.Array.Accelerate.Data.Colour.RGBA,
 
   -- * Display functions
   Render, Display(..),
@@ -21,9 +21,9 @@ module Graphics.Gloss.Accelerate.Raster.Field (
 
 -- Friends
 import Graphics.Gloss.Accelerate.Render
-import Graphics.Gloss.Accelerate.Data.Color
 import Graphics.Gloss.Accelerate.Data.Point
 import Graphics.Gloss.Accelerate.Raster.Array
+import Data.Array.Accelerate.Data.Colour.RGBA
 
 -- Standard library
 import Prelude                                          as P
@@ -43,7 +43,7 @@ import Data.Array.Accelerate                            as A
 animateField
     :: Display                          -- ^ Display mode
     -> (Int, Int)                       -- ^ Number of pixels to draw per point
-    -> (Exp Float -> Exp Point -> Exp Color)
+    -> (Exp Float -> Exp Point -> Exp Colour)
             -- ^ A function to compute the colour at a particular point.
             --
             --   It is passed the time in seconds since the program started, and
@@ -59,7 +59,7 @@ animateFieldWith
     :: Render           -- ^ Method to render the field
     -> Display          -- ^ Display mode
     -> (Int, Int)       -- ^ Number of pixels to draw per point
-    -> (Exp Float -> Exp Point -> Exp Color)
+    -> (Exp Float -> Exp Point -> Exp Colour)
             -- ^ A function to compute the colour at a particular point.
             --
             --   It is passed the time in seconds since the program started, and
@@ -88,7 +88,7 @@ animateFieldIO
     -> (Int, Int)                       -- ^ Number of pixels to draw per point
     -> (Float -> IO world)              -- ^ Extract world from time in seconds
                                         --   since the program started
-    -> (Acc world -> Exp Point -> Exp Color)
+    -> (Acc world -> Exp Point -> Exp Colour)
             -- ^ A function to compute the colour at a particular point.
             --
             --   It is passed the world, and
@@ -107,7 +107,7 @@ animateFieldIOWith
     -> (Int, Int)       -- ^ Number of pixels to draw per point
     -> (Float -> IO world) -- ^ Extract world from time in seconds
                            --   since the program started
-    -> (Acc world -> Exp Point -> Exp Color)
+    -> (Acc world -> Exp Point -> Exp Colour)
             -- ^ A function to compute the colour at a particular point.
             --
             --   It is passed the world, and
@@ -138,7 +138,7 @@ playField
     -> Int              -- ^ Number of simulation steps to take for each second of real time
     -> state            -- ^ The initial state
     -> (state -> world) -- ^ Extract the world state
-    -> (Acc world -> Exp Point -> Exp Color)
+    -> (Acc world -> Exp Point -> Exp Colour)
             -- ^ Compute the colour of the world at a given point
     -> (Event -> state -> state)
             -- ^ Handle input events
@@ -160,7 +160,7 @@ playFieldWith
     -> Int              -- ^ Number of simulation steps to take for each second of real time
     -> state            -- ^ The initial state
     -> (state -> world) -- ^ Extract the world state
-    -> (Acc world -> Exp Point -> Exp Color)
+    -> (Acc world -> Exp Point -> Exp Colour)
             -- ^ Compute the colour of the world at a given point
     -> (Event -> state -> state)
             -- ^ Handle input events
@@ -197,7 +197,7 @@ playFieldIO
     -> Int              -- ^ Number of simulation steps to take for each second of real time
     -> state            -- ^ The initial state
     -> (state -> IO world) -- ^ Extract the world state
-    -> (Acc world -> Exp Point -> Exp Color)
+    -> (Acc world -> Exp Point -> Exp Colour)
             -- ^ Compute the colour of the world at a given point
     -> (Event -> state -> IO state)
             -- ^ Handle input events
@@ -219,7 +219,7 @@ playFieldIOWith
     -> Int              -- ^ Number of simulation steps to take for each second of real time
     -> state            -- ^ The initial state
     -> (state -> IO world) -- ^ Extract the world state
-    -> (Acc world -> Exp Point -> Exp Color)
+    -> (Acc world -> Exp Point -> Exp Colour)
             -- ^ Compute the colour of the world at a given point
     -> (Event -> state -> IO state)
             -- ^ Handle input events
@@ -268,8 +268,8 @@ sizeOfDisplay display
 makeField
     :: Int                                      -- ^ image width
     -> Int                                      -- ^ image height
-    -> (world -> Exp Point -> Exp Color)        -- ^ function to apply at each point
-    -> (world -> Acc (Array DIM2 Color))        -- ^ new function that generates the field
+    -> (world -> Exp Point -> Exp Colour)       -- ^ function to apply at each point
+    -> (world -> Acc (Array DIM2 Colour))       -- ^ new function that generates the field
 makeField sizeX sizeY makePixel world
   = A.generate (constant (Z :. sizeY :. sizeX))
                (makePixel world . pointOfIndex sizeX sizeY)

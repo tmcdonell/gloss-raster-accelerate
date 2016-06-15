@@ -24,6 +24,7 @@ Library
   build-depends:
         base                    >= 4.6
       , accelerate              >= 0.16
+      , colour-accelerate       >= 0.1
       , gloss                   >= 1.9
       , gloss-accelerate        >= 0.2
 

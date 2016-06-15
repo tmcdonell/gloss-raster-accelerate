@@ -6,7 +6,7 @@
 module Graphics.Gloss.Accelerate.Raster.Array (
 
   module Graphics.Gloss.Accelerate.Data.Point,
-  module Graphics.Gloss.Accelerate.Data.Color,
+  module Data.Array.Accelerate.Data.Colour.RGBA,
 
   -- * Display functions
   Render, Display(..),
@@ -22,9 +22,9 @@ module Graphics.Gloss.Accelerate.Raster.Array (
 
 -- Friends
 import Graphics.Gloss.Accelerate.Render
-import Graphics.Gloss.Accelerate.Data.Color
 import Graphics.Gloss.Accelerate.Data.Point
 import Graphics.Gloss.Accelerate.Data.Picture
+import Data.Array.Accelerate.Data.Colour.RGBA
 
 -- Standard library
 import Prelude                                          as P
@@ -49,7 +49,7 @@ import Data.Array.Accelerate                            as A
 animateArray
     :: Display                          -- ^ Display mode
     -> (Int, Int)                       -- ^ Number of pixels to draw per point
-    -> (Exp Float -> Acc (Array DIM2 Color))
+    -> (Exp Float -> Acc (Array DIM2 Colour))
             -- ^ A function to construct an array of colours. The function
             --   should return an array of the same extent every time it is
             --   applied.
@@ -66,7 +66,7 @@ animateArrayWith
     :: Render                           -- ^ Method to render the array
     -> Display                          -- ^ Display mode
     -> (Int, Int)                       -- ^ Number of pixels to draw per point
-    -> (Exp Float -> Acc (Array DIM2 Color))
+    -> (Exp Float -> Acc (Array DIM2 Colour))
             -- ^ A function to construct an array of colours. The function
             --   should return an array of the same extent every time it is
             --   applied.
@@ -98,7 +98,7 @@ animateArrayIO
     -> (Int, Int)                       -- ^ Number of pixels to draw per point
     -> (Float -> IO world)              -- ^ Extract world from time in seconds
                                         --   since the program started
-    -> (Acc world -> Acc (Array DIM2 Color))
+    -> (Acc world -> Acc (Array DIM2 Colour))
             -- ^ A function to construct an array of colours. The function
             --   should return an array of the same extent every time it is
             --   applied.
@@ -118,7 +118,7 @@ animateArrayIOWith
     -> (Int, Int)                       -- ^ Number of pixels to draw per point
     -> (Float -> IO world)              -- ^ Extract world from time in seconds
                                         --   since the program started
-    -> (Acc world -> Acc (Array DIM2 Color))
+    -> (Acc world -> Acc (Array DIM2 Colour))
             -- ^ A function to construct an array of colours. The function
             --   should return an array of the same extent every time it is
             --   applied.
@@ -150,7 +150,7 @@ playArray
     -> Int              -- ^ Number of simulation steps to take for each second of real time
     -> state            -- ^ The initial state
     -> (state -> world) -- ^ Extract the world state
-    -> (Acc world -> Acc (Array DIM2 Color))
+    -> (Acc world -> Acc (Array DIM2 Colour))
             -- ^ Compute the colour of the world
     -> (Event -> state -> state)
             -- ^ Handle input events
@@ -172,7 +172,7 @@ playArrayWith
     -> Int              -- ^ Number of simulation steps to take for each second of real time
     -> state            -- ^ The initial state
     -> (state -> world) -- ^ Extract the world state
-    -> (Acc world -> Acc (Array DIM2 Color))
+    -> (Acc world -> Acc (Array DIM2 Colour))
             -- ^ Compute the colour of the world
     -> (Event -> state -> state)
             -- ^ Handle input events
@@ -202,7 +202,7 @@ playArrayIO
     -> Int              -- ^ Number of simulation steps to take for each second of real time
     -> state            -- ^ The initial state
     -> (state -> IO world) -- ^ Extract the world state
-    -> (Acc world -> Acc (Array DIM2 Color))
+    -> (Acc world -> Acc (Array DIM2 Colour))
             -- ^ Compute the colour of the world
     -> (Event -> state -> IO state)
             -- ^ Handle input events
@@ -224,7 +224,7 @@ playArrayIOWith
     -> Int              -- ^ Number of simulation steps to take for each second of real time
     -> state            -- ^ The initial state
     -> (state -> IO world) -- ^ Extract the world state
-    -> (Acc world -> Acc (Array DIM2 Color))
+    -> (Acc world -> Acc (Array DIM2 Colour))
             -- ^ Compute the colour of the world
     -> (Event -> state -> IO state)
             -- ^ Handle input events
@@ -256,7 +256,7 @@ makePicture
     => Render                                   -- ^ method to compute the image
     -> Int                                      -- ^ pixel width
     -> Int                                      -- ^ pixel height
-    -> (Acc world -> Acc (Array DIM2 Color))    -- ^ function to create the image
+    -> (Acc world -> Acc (Array DIM2 Colour))   -- ^ function to create the image
     -> (world -> Picture)                       -- ^ new function that generates the picture
 makePicture render zoomX zoomY makeArray
   = let -- compute the image
