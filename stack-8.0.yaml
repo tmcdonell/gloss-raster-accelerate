@@ -1,7 +1,7 @@
-# For more information, see: http://docs.haskellstack.org/en/stable/yaml_configuration.html
+# For more information, see: https://github.com/commercialhaskell/stack/blob/release/doc/yaml_configuration.md
 # vim: nospell
 
-resolver: lts-2.22
+resolver: nightly-2016-06-06
 
 packages:
 - '.'
@@ -21,13 +21,10 @@ packages:
   extra-dep: true
 
 extra-deps:
-- 'base-orphans-0.4.4'
-- 'gloss-1.9.2.1'
-- 'gloss-rendering-1.9.2.1'
-- 'GLURaw-1.4.0.2'
-- 'GLUT-2.5.1.1'
-- 'OpenGL-2.9.2.0'
-- 'OpenGLRaw-1.5.0.1'
+- 'binary-0.8.4.0'
+- 'bmp-1.2.6.1'
+- 'gloss-1.10.2.2'
+- 'gloss-rendering-1.10.2.1'
 - 'unique-0'
 
 # Override default flag values for local packages and extra-deps
@@ -41,7 +38,7 @@ extra-package-dbs: []
 
 # Require a specific version of stack, using version ranges
 # require-stack-version: -any # Default
-# require-stack-version: >= 1.0.0
+# require-stack-version: >= 0.1.4.0
 
 # Override the architecture used by stack, especially useful on Windows
 # arch: i386
@@ -51,5 +48,3 @@ extra-package-dbs: []
 # extra-include-dirs: [/path/to/dir]
 # extra-lib-dirs: [/path/to/dir]
 
-# Allow a newer minor version of GHC than the snapshot specifies
-# compiler-check: newer-minor
