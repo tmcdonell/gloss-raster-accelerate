@@ -260,7 +260,8 @@ makePicture
     -> (world -> Picture)                       -- ^ new function that generates the picture
 makePicture render zoomX zoomY makeArray
   = let -- compute the image
-        pixels          = render (A.map (packRGBA . opaque) . makeArray)
+        -- assume the host is a little-endian architecture
+        pixels          = render (A.map (packABGR . opaque) . makeArray)
 
         -- Turn the array into a Gloss picture
         picture world   = bitmapOfArray (pixels world) False
