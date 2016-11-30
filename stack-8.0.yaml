@@ -1,30 +1,26 @@
 # For more information, see: https://github.com/commercialhaskell/stack/blob/release/doc/yaml_configuration.md
 # vim: nospell
 
-resolver: nightly-2016-06-06
+resolver: lts-7.8
 
 packages:
 - '.'
 - location:
     git:    https://github.com/AccelerateHS/accelerate.git
-    commit: 868c372012cccdf453f5653ecfa40f11545e0150
+    commit: f83a4fcd672f59b834425fe67c41d6a46edbcde5
   extra-dep: true
 
 - location:
     git:    https://github.com/tmcdonell/gloss-accelerate.git
-    commit: 0cfc66ee09b50d5ed2eaa6fb5df68dc720e3a7dd
+    commit: 7aefea11b56dbc230e64ee39d7f268fccc2735de
   extra-dep: true
 
 - location:
     git:    https://github.com/tmcdonell/colour-accelerate.git
-    commit: b8d88a99e2d015c9acddefa41a2ffa9955ac5a08
+    commit: b366828f709e71fcd0371beae34285cf9551d1c5
   extra-dep: true
 
 extra-deps:
-- 'binary-0.8.4.0'
-- 'bmp-1.2.6.1'
-- 'gloss-1.10.2.2'
-- 'gloss-rendering-1.10.2.1'
 - 'unique-0'
 
 # Override default flag values for local packages and extra-deps
