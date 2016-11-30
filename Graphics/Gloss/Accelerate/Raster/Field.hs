@@ -9,10 +9,10 @@ module Graphics.Gloss.Accelerate.Raster.Field (
 
   -- * Display functions
   Render, Display(..),
-  animateField, animateFieldWith,
-  animateFieldIO, animateFieldIOWith,
-  playField, playFieldWith,
-  playFieldIO, playFieldIOWith,
+  animateFieldWith,
+  animateFieldIOWith,
+  playFieldWith,
+  playFieldIOWith,
 
   -- * Field creation
   makeField,
@@ -37,20 +37,6 @@ import Data.Array.Accelerate                            as A
 
 -- Animate --------------------------------------------------------------------
 -- -------
-
--- | Animate a continuous 2D function using the default backend
---
-animateField
-    :: Display                          -- ^ Display mode
-    -> (Int, Int)                       -- ^ Number of pixels to draw per point
-    -> (Exp Float -> Exp Point -> Exp Colour)
-            -- ^ A function to compute the colour at a particular point.
-            --
-            --   It is passed the time in seconds since the program started, and
-            --   a point between (-1,1) and (+1,1).
-    -> IO ()
-animateField = animateFieldWith defaultRender
-
 
 -- | Animate a continuous 2D function, specifying the backend used to render
 --   the field.
@@ -78,23 +64,6 @@ animateFieldWith render display zoom@(zoomX, zoomY) makePixel
         display
         zoom
         (makeField sizeX sizeY makePixel)
-
-
--- | Animate a continuous 2D function using IO actions and the default backend
---
-animateFieldIO
-    :: Arrays world
-    => Display                          -- ^ Display mode
-    -> (Int, Int)                       -- ^ Number of pixels to draw per point
-    -> (Float -> IO world)              -- ^ Extract world from time in seconds
-                                        --   since the program started
-    -> (Acc world -> Exp Point -> Exp Colour)
-            -- ^ A function to compute the colour at a particular point.
-            --
-            --   It is passed the world, and
-            --   a point between (-1,1) and (+1,1).
-    -> IO ()
-animateFieldIO = animateFieldIOWith defaultRender
 
 
 -- | Animate a continuous 2D function using IO actions, specifying the backend used to render
@@ -127,26 +96,6 @@ animateFieldIOWith render display zoom@(zoomX, zoomY) makeWorld makePixel
         zoom
         makeWorld
         (makeField sizeX sizeY makePixel)
-
-
--- | Play a game with a continuous 2D function using the default backend.
---
-playField
-    :: Arrays world
-    => Display          -- ^ Display mode
-    -> (Int, Int)       -- ^ Number of pixels to draw per point
-    -> Int              -- ^ Number of simulation steps to take for each second of real time
-    -> state            -- ^ The initial state
-    -> (state -> world) -- ^ Extract the world state
-    -> (Acc world -> Exp Point -> Exp Colour)
-            -- ^ Compute the colour of the world at a given point
-    -> (Event -> state -> state)
-            -- ^ Handle input events
-    -> (Float -> state -> state)
-            -- ^ Step the world one iteration.
-            --   It is passed the time in seconds since the program started.
-    -> IO ()
-playField = playFieldWith defaultRender
 
 
 -- | Play a game with a continuous 2D function, specifying the method used to
@@ -187,26 +136,6 @@ playFieldWith render display zoom@(zoomX, zoomY) stepRate
         (makeField sizeX sizeY makePixel)
         handleEvent
         stepState
-
--- | Play a game with a continuous 2D function using IO actions, and the default backend.
---
-playFieldIO
-    :: Arrays world
-    => Display          -- ^ Display mode
-    -> (Int, Int)       -- ^ Number of pixels to draw per point
-    -> Int              -- ^ Number of simulation steps to take for each second of real time
-    -> state            -- ^ The initial state
-    -> (state -> IO world) -- ^ Extract the world state
-    -> (Acc world -> Exp Point -> Exp Colour)
-            -- ^ Compute the colour of the world at a given point
-    -> (Event -> state -> IO state)
-            -- ^ Handle input events
-    -> (Float -> state -> IO state)
-            -- ^ Step the world one iteration.
-            --   It is passed the time in seconds since the program started.
-    -> IO ()
-playFieldIO = playFieldIOWith defaultRender
-
 
 -- | Play a game with a continuous 2D function using IO actions, specifying the method used to
 --   render the field.
