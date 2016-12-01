@@ -58,7 +58,7 @@ animateArrayWith
             --   It is passed the time in seconds since the program started.
     -> IO ()
 animateArrayWith render display (zoomX, zoomY) makeArray
-  | zoomX < 1 || zoomY < 1
+  | zoomX P.< 1 P.|| zoomY P.< 1
   = error "Graphics.Gloss.Raster: invalid pixel scalar factor"
 
   | otherwise
@@ -91,7 +91,7 @@ animateArrayIOWith
             --   It is passed the world
     -> IO ()
 animateArrayIOWith render display (zoomX, zoomY) makeWorld makeArray
-  | zoomX < 1 || zoomY < 1
+  | zoomX P.< 1 P.|| zoomY P.< 1
   = error "Graphics.Gloss.Raster: invalid pixel scalar factor"
 
   | otherwise
@@ -126,7 +126,7 @@ playArrayWith
     -> IO ()
 playArrayWith render display (zoomX, zoomY) stepRate
               initState makeWorld makeArray handleEvent stepState
-  | zoomX < 1 || zoomY < 1
+  | zoomX P.< 1 P.|| zoomY P.< 1
   = error "Graphics.Gloss.Raster: invalid pixel scalar factor"
 
   | otherwise
@@ -157,7 +157,7 @@ playArrayIOWith
     -> IO ()
 playArrayIOWith render display (zoomX, zoomY) stepRate
               initState makeWorld makeArray handleEvent stepState
-  | zoomX < 1 || zoomY < 1
+  | zoomX P.< 1 P.|| zoomY P.< 1
   = error "Graphics.Gloss.Raster: invalid pixel scalar factor"
 
   | otherwise

@@ -7,17 +7,17 @@ packages:
 - '.'
 - location:
     git:    https://github.com/AccelerateHS/accelerate.git
-    commit: f83a4fcd672f59b834425fe67c41d6a46edbcde5
+    commit: ed02d0ab0fc1d4430193efe12c92d9d77239e68c
   extra-dep: true
 
 - location:
     git:    https://github.com/tmcdonell/gloss-accelerate.git
-    commit: 7aefea11b56dbc230e64ee39d7f268fccc2735de
+    commit: 683209cbc135880c7016eaf1f40cea9bc1786960
   extra-dep: true
 
 - location:
     git:    https://github.com/tmcdonell/colour-accelerate.git
-    commit: b366828f709e71fcd0371beae34285cf9551d1c5
+    commit: 8639deb2f60c5b5af0447a89b91bf99e8282a552
   extra-dep: true
 
 extra-deps:
