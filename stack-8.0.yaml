@@ -12,12 +12,12 @@ packages:
 
 - location:
     git:    https://github.com/tmcdonell/gloss-accelerate.git
-    commit: 683209cbc135880c7016eaf1f40cea9bc1786960
+    commit: 17d7acb5bb707be723eab3add3e95a61190eb5bc
   extra-dep: true
 
 - location:
     git:    https://github.com/tmcdonell/colour-accelerate.git
-    commit: 8639deb2f60c5b5af0447a89b91bf99e8282a552
+    commit: 2c36c09d5ec0c4eb66dca3a2bc931d1c024890b8
   extra-dep: true
 
 extra-deps:
