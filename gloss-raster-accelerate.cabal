@@ -5,7 +5,7 @@ Description:            Parallel rendering of raster images using Accelerate
 License:                BSD3
 License-file:           LICENSE
 Author:                 Trevor L. McDonell
-Maintainer:             tmcdonell@cse.unsw.edu.au
+Maintainer:             Trevor L. McDonell <tmcdonell@cse.unsw.edu.au>
 Category:               Graphics
 Build-type:             Simple
 Cabal-version:          >=1.10

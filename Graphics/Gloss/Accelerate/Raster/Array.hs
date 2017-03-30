@@ -1,7 +1,15 @@
 {-# LANGUAGE CPP        #-}
 {-# LANGUAGE RankNTypes #-}
-
--- | Rendering of Accelerate arrays as raster images
+-- |
+-- Module      : Graphics.Gloss.Accelerate.Raster.Array
+-- Copyright   : [2013..2017] Trevor L. McDonell
+-- License     : BSD3
+--
+-- Maintainer  : Trevor L. McDonell <tmcdonell@cse.unsw.edu.au>
+-- Stability   : experimental
+-- Portability : non-portable (GHC extensions)
+--
+-- Rendering of Accelerate arrays as raster images
 --
 module Graphics.Gloss.Accelerate.Raster.Array (
 

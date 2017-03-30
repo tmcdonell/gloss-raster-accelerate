@@ -1,6 +1,14 @@
 {-# LANGUAGE RankNTypes #-}
-
--- | Rendering of 2D functions as raster fields
+-- |
+-- Module      : Graphics.Gloss.Accelerate.Raster.Field
+-- Copyright   : [2013..2017] Trevor L. McDonell
+-- License     : BSD3
+--
+-- Maintainer  : Trevor L. McDonell <tmcdonell@cse.unsw.edu.au>
+-- Stability   : experimental
+-- Portability : non-portable (GHC extensions)
+--
+-- Rendering of 2D functions as raster fields
 --
 module Graphics.Gloss.Accelerate.Raster.Field (
 
