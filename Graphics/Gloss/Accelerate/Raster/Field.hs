@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP        #-}
 {-# LANGUAGE RankNTypes #-}
 -- |
 -- Module      : Graphics.Gloss.Accelerate.Raster.Field
@@ -35,9 +36,15 @@ import Data.Array.Accelerate.Data.Colour.RGBA
 
 -- Standard library
 import Prelude                                          as P
+#if MIN_VERSION_gloss(1,11,0)
+import System.IO.Unsafe
+#endif
 
 -- Gloss
 import Graphics.Gloss.Interface.Pure.Game               ( Event )
+#if MIN_VERSION_gloss(1,11,0)
+import Graphics.Gloss.Interface.Environment
+#endif
 
 -- Accelerate
 import Data.Array.Accelerate                            as A
@@ -192,7 +199,11 @@ sizeOfDisplay :: Display -> (Int, Int)
 sizeOfDisplay display
   = case display of
       InWindow _ s _    -> s
+#if MIN_VERSION_gloss(1,11,0)
+      FullScreen        -> unsafePerformIO getScreenSize
+#else
       FullScreen s      -> s
+#endif
 
 
 -- | Lift a point-wise colouring function into an image creation function.
