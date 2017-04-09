@@ -5,24 +5,13 @@ resolver: lts-2.22
 
 packages:
 - '.'
-- location:
-    git:    https://github.com/AccelerateHS/accelerate.git
-    commit: 22d49629ade9b9b8e93985362323b1259155df37
-  extra-dep: true
-
-- location:
-    git:    https://github.com/tmcdonell/gloss-accelerate.git
-    commit: ad6217306ec34a38d046bf11b3d72c63475b107d
-  extra-dep: true
-
-- location:
-    git:    https://github.com/tmcdonell/colour-accelerate.git
-    commit: 245d30f7a9daa15d336cf67001c6543fa8533e5b
-  extra-dep: true
 
 extra-deps:
+- 'accelerate-1.0.0.0'
 - 'base-orphans-0.4.4'
+- 'colour-accelerate-0.1.0.0'
 - 'gloss-1.9.2.1'
+- 'gloss-accelerate-2.0.0.0'
 - 'gloss-rendering-1.9.2.1'
 - 'GLURaw-1.4.0.2'
 - 'GLUT-2.5.1.1'
