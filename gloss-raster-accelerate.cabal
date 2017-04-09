@@ -1,5 +1,5 @@
 Name:                   gloss-raster-accelerate
-Version:                0.2.0.0
+Version:                2.0.0.0
 Synopsis:               Parallel rendering of raster images using Accelerate
 Description:            Parallel rendering of raster images using Accelerate
 License:                BSD3
@@ -36,7 +36,7 @@ source-repository head
 
 source-repository this
   type:                         git
-  tag:                          0.2.0.0
+  tag:                          v2.0.0.0
   location:                     https://github.com/tmcdonell/gloss-raster-accelerate
 
 -- vim: nospell
