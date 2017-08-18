@@ -4,7 +4,7 @@
 # directory to speed subsequent compilations.
 #
 language: generic
-dist: precise
+dist: trusty
 
 cache:
   directories:
@@ -36,6 +36,10 @@ matrix:
       compiler: "GHC 8.0"
       addons: { apt: { sources: [ *apt_sources ], packages: [ *apt_packages, cabal-install-1.24 ] }}
 
+    - env: GHC=8.2.1 CABAL=2.0
+      compiler: "GHC 8.2"
+      addons: { apt: { sources: [ *apt_sources ], packages: [ *apt_packages, cabal-install-2.0 ] }}
+
   fast_finish: true
 
 before_install:
@@ -46,10 +50,10 @@ install:
   - echo "$(stack exec ghc -- --version) [$(stack exec ghc -- --print-project-git-commit-id 2> /dev/null || echo '?')]"
   - cabal --version
   - stack --version
-  - travis_retry stack build --only-dependencies --no-terminal --no-haddock-deps
+  - travis_retry stack build --only-dependencies --fast --no-terminal --no-haddock-deps
 
 script:
-  - stack build --no-terminal --haddock --no-haddock-deps
+  - stack build --fast --no-terminal --haddock --no-haddock-deps
 
 after_success:
   - source .travis/update-accelerate-buildbot.sh
