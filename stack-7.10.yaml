@@ -1,14 +1,14 @@
 # For more information, see: http://docs.haskellstack.org/en/stable/yaml_configuration.html
 # vim: nospell
 
-resolver: lts-6.30
+resolver: lts-6.35
 
 packages:
 - '.'
 
 extra-deps:
-- 'accelerate-1.0.0.0'
-- 'colour-accelerate-0.1.0.0'
+- 'accelerate-1.1.1.0'
+- 'colour-accelerate-0.2.0.0'
 - 'gloss-1.11.1.1'
 - 'gloss-accelerate-2.0.0.0'
 - 'gloss-rendering-1.11.1.1'
