@@ -8,7 +8,7 @@ dist: trusty
 
 cache:
   directories:
-    - $HOME/.stack
+    - $HOME/.stack/snapshots
     - .stack-work/install
 
 before_cache:
