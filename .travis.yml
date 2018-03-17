@@ -62,7 +62,7 @@ install:
   - cabal --version
   - stack --version
   - stack build --no-terminal --dry-run
-  - travis_retry stack build --only-dependencies --fast --no-terminal --no-haddock-deps
+  - travis_retry travis_wait 60 stack build --only-dependencies --fast --no-terminal --no-haddock-deps
 
 script:
   - stack build --fast --no-terminal --haddock --no-haddock-deps
