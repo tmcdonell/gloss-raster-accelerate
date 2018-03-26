@@ -3,12 +3,12 @@
 # Basic template to test with GHC=[7.8, 7.10, 8.0]. Caches the 'stack' build
 # directory to speed subsequent compilations.
 #
-language: generic
+language: minimal
 dist: trusty
 
 cache:
   directories:
-    - $HOME/.stack
+    - $HOME/.stack/snapshots
     - .stack-work/install
 
 before_cache:
@@ -44,6 +44,13 @@ matrix:
       compiler: "GHC 8.2"
       addons: { apt: { sources: [ *apt_sources ], packages: [ *apt_packages, cabal-install-2.0 ] }}
 
+    - env: GHC=8.4.1 CABAL=2.0
+      compiler: "GHC 8.4"
+      addons: { apt: { sources: [ *apt_sources ], packages: [ *apt_packages, cabal-install-2.0 ] }}
+
+  # allow_failures:
+  #   - env: GHC=7.8.4 CABAL=1.18
+
   fast_finish: true
 
 before_install:
@@ -54,7 +61,8 @@ install:
   - echo "$(stack exec ghc -- --version) [$(stack exec ghc -- --print-project-git-commit-id 2> /dev/null || echo '?')]"
   - cabal --version
   - stack --version
-  - travis_retry stack build --only-dependencies --fast --no-terminal --no-haddock-deps
+  - stack build --no-terminal --dry-run
+  - travis_retry travis_wait 60 stack build --only-dependencies --fast --no-terminal --no-haddock-deps
 
 script:
   - stack build --fast --no-terminal --haddock --no-haddock-deps
