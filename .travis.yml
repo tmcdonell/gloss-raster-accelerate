@@ -9,9 +9,9 @@ dist: xenial
 cache:
   timeout: 600
   directories:
-    - $HOME/.stack/snapshots
+    - $HOME/.stack
     - $HOME/.local/bin
-    - .stack-work/install
+    - $TRAVIS_BUILD_DIR/.stack-work
 
 before_cache:
   # - rm -rf $(stack path --local-install-root)/bin
@@ -22,15 +22,15 @@ addons:
     sources: &apt_sources
       - hvr-ghc
     packages: &apt_packages
-      - libgmp-dev
+      - alex-3.1.7
       - freeglut3-dev
       - happy-1.19.5
-      - alex-3.1.7
+      - libgmp-dev
 
 matrix:
   fast_finish: true
   include:
-    - env: GHC=8.6.4
+    - env: GHC=8.6.5
       compiler: "GHC 8.6"
 
     - env: GHC=8.4.3
@@ -64,7 +64,7 @@ before_install:
   - stack --version
 
 install:
-  - export FLAGS="--fast --jobs=2 --no-terminal --no-copy-bins"
+  - export FLAGS="--fast --jobs=2 --no-terminal --no-copy-bins --no-interleaved-output"
   - stack build ${FLAGS} --test --dry-run
 
   - travis_retry stack build ${FLAGS} --test --only-dependencies
