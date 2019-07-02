@@ -1,22 +1,22 @@
 # For more information, see: https://github.com/commercialhaskell/stack/blob/release/doc/yaml_configuration.md
 # vim: nospell
 
-resolver: lts-13.12
+resolver: lts-13.25
 
 packages:
 - .
 
 extra-deps:
-- git:    https://github.com/tmcdonell/accelerate.git
-  commit: cfa1f48bef0e8d5bf2bec60a11ade2cac2153a9d
+- github: tmcdonell/accelerate
+  commit: 5c2c1db205fcf1e0777ef9399959100b75e7bbec
 
-- git:    https://github.com/tmcdonell/linear-accelerate.git
-  commit: 78d6e834f38443da5c99b7be5d27bbd498ebd020
+- github: tmcdonell/linear-accelerate
+  commit: 7d3bb1d40cdcc75f2f658c31b2eb7541c949e52e
 
-- git:    https://github.com/tmcdonell/gloss-accelerate.git
-  commit: a36a8586aaa9867a1fe199b13b639e47f5de97ee
+- github: tmcdonell/gloss-accelerate
+  commit: de4da479dfa236f4b7c08348cfc7e9fef70476ea
 
-- git:    https://github.com/tmcdonell/colour-accelerate.git
+- github: tmcdonell/colour-accelerate
   commit: edc575cc6a810f5cce8d4b4423ef3968f30a93a3
 
 - tasty-hedgehog-0.2.0.0
