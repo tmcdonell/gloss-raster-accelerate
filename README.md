@@ -16,7 +16,7 @@ Extras to help interface [gloss][gloss] and [Accelerate][accelerate]. Refer to
 the main repositories of each project for more information.
 
 Contributions and bug reports are welcome!<br>
-Please feel free to contact me through GitHub or [gitter.im][gitter.im].
+Please feel free to contact me through [GitHub][accelerate] or [gitter.im][gitter.im].
 
   [gloss]:      https://github.com/benl23x5/gloss
   [accelerate]: https://github.com/AccelerateHS/accelerate

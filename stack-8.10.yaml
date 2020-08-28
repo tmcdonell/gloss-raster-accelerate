@@ -4,23 +4,16 @@
 # For advanced use and comprehensive documentation of the format, please see:
 # https://docs.haskellstack.org/en/stable/yaml_configuration/
 
-resolver: nightly-2020-08-13
+resolver: nightly-2020-08-26
 
 packages:
 - .
 
 extra-deps:
-- github: tmcdonell/accelerate
-  commit: cc4ae666548cb0340e6eb30de41ca6b869e8809b
-
-- github: tmcdonell/linear-accelerate
-  commit: e0956017d938a05f2ef4180b364f4d2cd71eb5b9
-
-- github: tmcdonell/gloss-accelerate
-  commit: ea8ab62a3beee5f451a161ccd9897b4370fa6b95
-
-- github: tmcdonell/colour-accelerate
-  commit: 24808b07bd410e5d51b7543496d10f73c8f78e0b
+- accelerate-1.3.0.0
+- colour-accelerate-0.4.0.0
+- gloss-accelerate-2.1.0.0
+- linear-accelerate-0.7.0.0
 
 # Override default flag values for local packages and extra-deps
 # flags: {}
